@@ -1,1 +1,1 @@
-# bnt-governor
+# BNT Token Governor
