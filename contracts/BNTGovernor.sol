@@ -8,7 +8,10 @@ import "./ISmartToken.sol";
 /// @title The BNT Governor contract is used to govern the BNT ERC20 token by restricting its launch-time initial
 /// administrative privileges.
 contract BNTGovernor is AccessControl {
-    // The governor role is used to globally govern the contract and its roles.
+    // The supervisor role is used to globally govern the contract and its governing roles.
+    bytes32 public constant SUPERVISOR_ROLE = keccak256("SUPERVISOR_ROLE");
+
+    // The governor role is used to govern the the minter role.
     bytes32 public constant GOVERNOR_ROLE = keccak256("GOVERNOR_ROLE");
 
     // The minter role is used to control who can request the BNT ERC20 token to mint additional tokens.
@@ -26,16 +29,17 @@ contract BNTGovernor is AccessControl {
         token = bntToken;
 
         // Set up administrative roles.
-        _setRoleAdmin(GOVERNOR_ROLE, GOVERNOR_ROLE);
+        _setRoleAdmin(SUPERVISOR_ROLE, SUPERVISOR_ROLE);
+        _setRoleAdmin(GOVERNOR_ROLE, SUPERVISOR_ROLE);
         _setRoleAdmin(MINTER_ROLE, GOVERNOR_ROLE);
 
         // Allow the deployer to initially govern the contract.
-        _setupRole(GOVERNOR_ROLE, _msgSender());
+        _setupRole(SUPERVISOR_ROLE, _msgSender());
     }
 
     /// @dev Accepts the ownership of the token. Only allowed by the GOVERNOR role.
     function acceptTokenOwnership() external {
-        require(hasRole(GOVERNOR_ROLE, _msgSender()), "ERR_ACCESS_DENIED");
+        require(hasRole(SUPERVISOR_ROLE, _msgSender()), "ERR_ACCESS_DENIED");
 
         token.acceptOwnership();
     }
