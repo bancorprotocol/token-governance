@@ -7,8 +7,6 @@ import "./IOwned.sol";
 
 /// @title Smart Token interface
 interface ISmartToken is IERC20, IOwned {
-    function disableTransfers(bool disable) external;
-
     function issue(address to, uint256 amount) external;
 
     function destroy(address from, uint256 amount) external;
