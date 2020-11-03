@@ -192,9 +192,9 @@ contract('BNTGovernor', async (accounts) => {
 
       it('should allow token holders to destroy their own tokens', async () => {
         const value = new BN(100);
-        let balance = await token.balanceOf.call(tokenOwner);
+        const balance = await token.balanceOf.call(tokenOwner);
         await bntGovernor.destroy(tokenOwner, value, { from: tokenOwner });
-        let newBalance = await token.balanceOf.call(tokenOwner);
+        const newBalance = await token.balanceOf.call(tokenOwner);
         expect(newBalance).to.be.bignumber.equal(balance.sub(value));
       });
     });
