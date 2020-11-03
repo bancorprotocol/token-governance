@@ -23,14 +23,6 @@ contract SmartToken is ISmartToken, ERC20, Owned {
         _;
     }
 
-    /// @dev Disables/enables transfers.
-    ///
-    /// @param disable Whether to disable/enable the transfers.
-    ///
-    function disableTransfers(bool disable) public override ownerOnly {
-        transfersEnabled = !disable;
-    }
-
     /// @dev Increases the token supply and sends the new tokens to the given account.
     ///
     /// @param to Account to receive the new amount.
