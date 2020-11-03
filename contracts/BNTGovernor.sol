@@ -40,23 +40,23 @@ contract BNTGovernor is AccessControl {
         token.acceptOwnership();
     }
 
-    /// @dev Issues new BNT tokens. Only allowed by the MINTER role.
+    /// @dev Mints new BNT tokens. Only allowed by the MINTER role.
     ///
     /// @param to Account to receive the new amount.
     /// @param amount Amount to increase the supply by.
     ///
-    function issue(address to, uint256 amount) external {
+    function mint(address to, uint256 amount) external {
         require(hasRole(MINTER_ROLE, _msgSender()), "ERR_ACCESS_DENIED");
 
         token.issue(to, amount);
     }
 
-    /// @dev Removes existing BNT tokens. Only allowed by the MINTER role or the owners themselves.
+    /// @dev Burns existing BNT tokens. Only allowed by the MINTER role or the owners themselves.
     ///
     /// @param from Account to remove the amount from.
     /// @param amount Amount to decrease the supply by.
     ///
-    function destroy(address from, uint256 amount) external {
+    function burn(address from, uint256 amount) external {
         address msgSender = _msgSender();
         require(hasRole(MINTER_ROLE, msgSender) || from == msgSender, "ERR_ACCESS_DENIED");
 
