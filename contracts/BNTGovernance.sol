@@ -5,9 +5,9 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 import "./ISmartToken.sol";
 
-/// @title The BNT Governor contract is used to govern the BNT ERC20 token by restricting its launch-time initial
+/// @title The BNT Governance contract is used to govern the BNT ERC20 token by restricting its launch-time initial
 /// administrative privileges.
-contract BNTGovernor is AccessControl {
+contract BNTGovernance is AccessControl {
     // The supervisor role is used to globally govern the contract and its governing roles.
     bytes32 public constant SUPERVISOR_ROLE = keccak256("SUPERVISOR_ROLE");
 
