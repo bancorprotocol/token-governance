@@ -3,11 +3,12 @@ pragma solidity 0.6.12;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
+import "./IMintable.sol";
 import "./ISmartToken.sol";
 
 /// @title The BNT Governance contract is used to govern the BNT ERC20 token by restricting its launch-time initial
 /// administrative privileges.
-contract BNTGovernance is AccessControl {
+contract BNTGovernance is IMintable, AccessControl {
     // The supervisor role is used to globally govern the contract and its governing roles.
     bytes32 public constant SUPERVISOR_ROLE = keccak256("SUPERVISOR_ROLE");
 
@@ -49,7 +50,7 @@ contract BNTGovernance is AccessControl {
     /// @param to Account to receive the new amount.
     /// @param amount Amount to increase the supply by.
     ///
-    function mint(address to, uint256 amount) external {
+    function mint(address to, uint256 amount) external override {
         require(hasRole(MINTER_ROLE, _msgSender()), "ERR_ACCESS_DENIED");
 
         token.issue(to, amount);
@@ -60,7 +61,7 @@ contract BNTGovernance is AccessControl {
     /// @param from Account to remove the amount from.
     /// @param amount Amount to decrease the supply by.
     ///
-    function burn(address from, uint256 amount) external {
+    function burn(address from, uint256 amount) external override {
         address msgSender = _msgSender();
         require(hasRole(MINTER_ROLE, msgSender) || from == msgSender, "ERR_ACCESS_DENIED");
 
