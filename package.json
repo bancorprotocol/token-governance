@@ -4,7 +4,7 @@
   "description": "BNT Token Governor",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bancorprotocol/bnt-governer"
+    "url": "git+https://github.com/bancorprotocol/bnt-governor"
   },
   "author": "Leonid Beder",
   "license": "MIT",
