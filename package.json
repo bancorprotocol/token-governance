@@ -22,7 +22,8 @@
     "lint:js": "eslint .",
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
     "format": "prettier --check --write contracts/**/* test/**/* --config .prettierrc",
-    "export": "node scripts/export.js"
+    "export": "node scripts/export.js",
+    "prepare": "yarn compile && yarn test && yarn lint && yarn export"
   },
   "dependencies": {},
   "devDependencies": {
