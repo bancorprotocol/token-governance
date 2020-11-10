@@ -56,14 +56,13 @@ contract TokenGovernance is IMintable, AccessControl {
         token.issue(to, amount);
     }
 
-    /// @dev Burns existing tokens. Only allowed by the MINTER role or the owners themselves.
+    /// @dev Burns existing tokens. Only allowed by the owners themselves.
     ///
     /// @param from Account to remove the amount from.
     /// @param amount Amount to decrease the supply by.
     ///
     function burn(address from, uint256 amount) external override {
-        address msgSender = _msgSender();
-        require(hasRole(MINTER_ROLE, msgSender) || from == msgSender, "ERR_ACCESS_DENIED");
+        require(from == _msgSender(), "ERR_ACCESS_DENIED");
 
         token.destroy(from, amount);
     }

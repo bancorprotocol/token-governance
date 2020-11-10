@@ -261,18 +261,8 @@ contract('TokenGovernance', async (accounts) => {
         await expectRevert(tokenGovernance.burn(tokenOwner, new BN(1000), { from: nonMinter }), 'ERR_ACCESS_DENIED');
       });
 
-      it('should allow minters to destroy existing tokens', async () => {
-        const value = new BN(1000);
-        let balance = await token.balanceOf.call(tokenOwner);
-        await tokenGovernance.burn(tokenOwner, value, { from: minter });
-        let newBalance = await token.balanceOf.call(tokenOwner);
-        expect(newBalance).to.be.bignumber.equal(balance.sub(value));
-
-        const value2 = new BN(1222);
-        balance = await token.balanceOf.call(tokenOwner);
-        await tokenGovernance.burn(tokenOwner, value2, { from: minter2 });
-        newBalance = await token.balanceOf.call(tokenOwner);
-        expect(newBalance).to.be.bignumber.equal(balance.sub(value2));
+      it('should revert when a minter roles attempts to destroy existing tokens', async () => {
+        await expectRevert(tokenGovernance.burn(tokenOwner, new BN(1000), { from: minter }), 'ERR_ACCESS_DENIED');
       });
 
       it('should allow token holders to destroy their own tokens', async () => {
