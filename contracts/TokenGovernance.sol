@@ -3,12 +3,11 @@ pragma solidity 0.6.12;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-import "./IMintable.sol";
-import "./ISmartToken.sol";
+import "./ITokenGovernance.sol";
 
 /// @title The Token Governance contract is used to govern the a mintable ERC20 token by restricting its launch-time initial
 /// administrative privileges.
-contract TokenGovernance is IMintable, AccessControl {
+contract TokenGovernance is ITokenGovernance, AccessControl {
     // The supervisor role is used to globally govern the contract and its governing roles.
     bytes32 public constant SUPERVISOR_ROLE = keccak256("SUPERVISOR_ROLE");
 
@@ -19,7 +18,7 @@ contract TokenGovernance is IMintable, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     // The address of the mintable ERC20 token.
-    ISmartToken public token;
+    ISmartToken public override token;
 
     /// @dev Initializes the contract.
     ///

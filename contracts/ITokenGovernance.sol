@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.6.12;
 
-/// @title The interface for mintable/burnable tokens.
-interface IMintable {
+import "./ISmartToken.sol";
+
+/// @title The interface for mintable/burnable token governance.
+interface ITokenGovernance {
+    // The address of the mintable ERC20 token.
+    function token() external view returns (ISmartToken);
+
     /// @dev Mints new tokens.
     ///
     /// @param to Account to receive the new amount.
