@@ -6,28 +6,28 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./IMintable.sol";
 import "./ISmartToken.sol";
 
-/// @title The BNT Governance contract is used to govern the BNT ERC20 token by restricting its launch-time initial
+/// @title The Token Governance contract is used to govern the a mintable ERC20 token by restricting its launch-time initial
 /// administrative privileges.
-contract BNTGovernance is IMintable, AccessControl {
+contract TokenGovernance is IMintable, AccessControl {
     // The supervisor role is used to globally govern the contract and its governing roles.
     bytes32 public constant SUPERVISOR_ROLE = keccak256("SUPERVISOR_ROLE");
 
     // The governor role is used to govern the the minter role.
     bytes32 public constant GOVERNOR_ROLE = keccak256("GOVERNOR_ROLE");
 
-    // The minter role is used to control who can request the BNT ERC20 token to mint additional tokens.
+    // The minter role is used to control who can request the mintable ERC20 token to mint additional tokens.
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    // The address of the BNT ERC20 token.
+    // The address of the mintable ERC20 token.
     ISmartToken public token;
 
     /// @dev Initializes the contract.
     ///
-    /// @param bntToken The address of the BNT ERC20 token.
-    constructor(ISmartToken bntToken) public {
-        require(address(bntToken) != address(0), "ERR_INVALID_ADDRESS");
+    /// @param mintableToken The address of the mintable ERC20 token.
+    constructor(ISmartToken mintableToken) public {
+        require(address(mintableToken) != address(0), "ERR_INVALID_ADDRESS");
 
-        token = bntToken;
+        token = mintableToken;
 
         // Set up administrative roles.
         _setRoleAdmin(SUPERVISOR_ROLE, SUPERVISOR_ROLE);
@@ -45,7 +45,7 @@ contract BNTGovernance is IMintable, AccessControl {
         token.acceptOwnership();
     }
 
-    /// @dev Mints new BNT tokens. Only allowed by the MINTER role.
+    /// @dev Mints new tokens. Only allowed by the MINTER role.
     ///
     /// @param to Account to receive the new amount.
     /// @param amount Amount to increase the supply by.
@@ -56,7 +56,7 @@ contract BNTGovernance is IMintable, AccessControl {
         token.issue(to, amount);
     }
 
-    /// @dev Burns existing BNT tokens. Only allowed by the MINTER role or the owners themselves.
+    /// @dev Burns existing tokens. Only allowed by the MINTER role or the owners themselves.
     ///
     /// @param from Account to remove the amount from.
     /// @param amount Amount to decrease the supply by.

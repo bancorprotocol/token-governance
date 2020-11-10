@@ -1,10 +1,10 @@
 {
-  "name": "@bancor/bnt-governor",
+  "name": "@bancor/token-governance",
   "version": "0.0.1",
-  "description": "BNT Token Governor",
+  "description": "Role-based Token Governance",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bancorprotocol/bnt-governor"
+    "url": "git+https://github.com/bancorprotocol/token-governance"
   },
   "author": "Leonid Beder",
   "license": "MIT",
