@@ -202,7 +202,6 @@ contract('TokenGovernance', async (accounts) => {
     let tokenGovernance;
     const governor = accounts[1];
     const tokenOwner = accounts[2];
-    const nonMinter = accounts[6];
     const minter = accounts[7];
     const minter2 = accounts[8];
 
@@ -258,6 +257,7 @@ contract('TokenGovernance', async (accounts) => {
       });
 
       it('should revert when a non-minter role tries to destroy existing tokens', async () => {
+        const nonMinter = accounts[6];
         await expectRevert(tokenGovernance.burn(tokenOwner, new BN(1000), { from: nonMinter }), 'ERR_ACCESS_DENIED');
       });
 
