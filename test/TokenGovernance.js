@@ -4,7 +4,7 @@ const { BN, expectRevert, constants } = require('@openzeppelin/test-helpers');
 const { ZERO_ADDRESS } = constants;
 
 const TokenGovernance = artifacts.require('TokenGovernance');
-const SmartToken = artifacts.require('SmartToken');
+const MintableToken = artifacts.require('MintableToken');
 
 contract('TokenGovernance', async (accounts) => {
   const SUPERVISOR_ROLE = web3.utils.keccak256('SUPERVISOR_ROLE');
@@ -15,7 +15,7 @@ contract('TokenGovernance', async (accounts) => {
   const supervisor = accounts[0];
 
   beforeEach(async () => {
-    token = await SmartToken.new('Mintable Token', 'TKN', { from: supervisor });
+    token = await MintableToken.new('Mintable Token', 'TKN', { from: supervisor });
   });
 
   describe('construction', async () => {

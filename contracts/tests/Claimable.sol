@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.6.12;
 
-import "../IOwned.sol";
+import "../IClaimable.sol";
 
 /// @title Provides support and utilities for contract ownership.
-contract Owned is IOwned {
+contract Claimable is IClaimable {
     address public override owner;
     address public newOwner;
 

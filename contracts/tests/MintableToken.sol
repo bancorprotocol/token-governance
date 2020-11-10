@@ -3,14 +3,14 @@ pragma solidity 0.6.12;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-import "../ISmartToken.sol";
-import "./Owned.sol";
+import "../IMintableToken.sol";
+import "./Claimable.sol";
 
-/// @title Smart Token
-contract SmartToken is ISmartToken, ERC20, Owned {
+/// @title Mintable Token
+contract MintableToken is IMintableToken, ERC20, Claimable {
     bool public transfersEnabled = true;
 
-    /// @dev initializes a new SmartToken instance.
+    /// @dev initializes a new MintableToken instance.
     ///
     /// @param name token name.
     /// @param symbol token short symbol.

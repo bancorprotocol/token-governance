@@ -18,12 +18,12 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     // The address of the mintable ERC20 token.
-    ISmartToken public override token;
+    IMintableToken public override token;
 
     /// @dev Initializes the contract.
     ///
     /// @param mintableToken The address of the mintable ERC20 token.
-    constructor(ISmartToken mintableToken) public {
+    constructor(IMintableToken mintableToken) public {
         require(address(mintableToken) != address(0), "ERR_INVALID_ADDRESS");
 
         token = mintableToken;
