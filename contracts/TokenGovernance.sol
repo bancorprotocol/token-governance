@@ -3,11 +3,11 @@ pragma solidity 0.6.12;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-import "./ITokenGovernance.sol";
+import "./IMintableToken.sol";
 
 /// @title The Token Governance contract is used to govern the a mintable ERC20 token by restricting its launch-time initial
 /// administrative privileges.
-contract TokenGovernance is ITokenGovernance, AccessControl {
+contract TokenGovernance is AccessControl {
     // The supervisor role is used to globally govern the contract and its governing roles.
     bytes32 public constant SUPERVISOR_ROLE = keccak256("SUPERVISOR_ROLE");
 
@@ -18,7 +18,7 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     // The address of the mintable ERC20 token.
-    IMintableToken public override token;
+    IMintableToken public token;
 
     /// @dev Initializes the contract.
     ///
@@ -49,7 +49,7 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
     /// @param to Account to receive the new amount.
     /// @param amount Amount to increase the supply by.
     ///
-    function mint(address to, uint256 amount) external override {
+    function mint(address to, uint256 amount) external {
         require(hasRole(MINTER_ROLE, _msgSender()), "ERR_ACCESS_DENIED");
 
         token.issue(to, amount);
@@ -60,7 +60,7 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
     /// @param from Account to remove the amount from.
     /// @param amount Amount to decrease the supply by.
     ///
-    function burn(address from, uint256 amount) external override {
+    function burn(address from, uint256 amount) external {
         require(from == _msgSender(), "ERR_ACCESS_DENIED");
 
         token.destroy(from, amount);
