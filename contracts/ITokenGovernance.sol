@@ -15,7 +15,7 @@ interface ITokenGovernance {
     ///
     function mint(address to, uint256 amount) external;
 
-    /// @dev Burns existing tokens.
+    /// @dev Burns tokens from the caller.
     ///
     /// @param amount Amount to decrease the supply by.
     ///

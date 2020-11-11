@@ -55,7 +55,7 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
         token.issue(to, amount);
     }
 
-    /// @dev Burns existing tokens. Only allowed by the holders themselves.
+    /// @dev Burns tokens from the caller.
     ///
     /// @param amount Amount to decrease the supply by.
     ///
