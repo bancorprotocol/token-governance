@@ -37,7 +37,7 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
         _setupRole(SUPERVISOR_ROLE, _msgSender());
     }
 
-    /// @dev Accepts the ownership of the token. Only allowed by the GOVERNOR role.
+    /// @dev Accepts the ownership of the token. Only allowed by the SUPERVISOR role.
     function acceptTokenOwnership() external {
         require(hasRole(SUPERVISOR_ROLE, _msgSender()), "ERR_ACCESS_DENIED");
 
