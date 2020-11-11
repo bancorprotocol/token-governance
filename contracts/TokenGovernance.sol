@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 import "./ITokenGovernance.sol";
 
-/// @title The Token Governance contract is used to govern the a mintable ERC20 token by restricting its launch-time initial
+/// @title The Token Governance contract is used to govern a mintable ERC20 token by restricting its launch-time initial
 /// administrative privileges.
 contract TokenGovernance is ITokenGovernance, AccessControl {
     // The supervisor role is used to globally govern the contract and its governing roles.
