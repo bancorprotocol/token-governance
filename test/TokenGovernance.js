@@ -248,27 +248,10 @@ contract('TokenGovernance', async (accounts) => {
     });
 
     describe('destroying', async () => {
-      it('should revert when a Supervisor role tries to destroy existing tokens', async () => {
-        await expectRevert(tokenGovernance.burn(tokenOwner, new BN(1000), { from: supervisor }), 'ERR_ACCESS_DENIED');
-      });
-
-      it('should revert when a Governor role tries to destroy existing tokens', async () => {
-        await expectRevert(tokenGovernance.burn(tokenOwner, new BN(1000), { from: governor }), 'ERR_ACCESS_DENIED');
-      });
-
-      it('should revert when a non-minter role tries to destroy existing tokens', async () => {
-        const nonMinter = accounts[6];
-        await expectRevert(tokenGovernance.burn(tokenOwner, new BN(1000), { from: nonMinter }), 'ERR_ACCESS_DENIED');
-      });
-
-      it('should revert when a minter roles attempts to destroy existing tokens', async () => {
-        await expectRevert(tokenGovernance.burn(tokenOwner, new BN(1000), { from: minter }), 'ERR_ACCESS_DENIED');
-      });
-
       it('should allow token holders to destroy their own tokens', async () => {
         const value = new BN(100);
         const balance = await token.balanceOf.call(tokenOwner);
-        await tokenGovernance.burn(tokenOwner, value, { from: tokenOwner });
+        await tokenGovernance.burn(value, { from: tokenOwner });
         const newBalance = await token.balanceOf.call(tokenOwner);
         expect(newBalance).to.be.bignumber.equal(balance.sub(value));
       });

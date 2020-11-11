@@ -57,12 +57,9 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
 
     /// @dev Burns existing tokens. Only allowed by the holders themselves.
     ///
-    /// @param from Account to remove the amount from.
     /// @param amount Amount to decrease the supply by.
     ///
-    function burn(address from, uint256 amount) external override {
-        require(from == _msgSender(), "ERR_ACCESS_DENIED");
-
-        token.destroy(from, amount);
+    function burn(uint256 amount) external override {
+        token.destroy(_msgSender(), amount);
     }
 }

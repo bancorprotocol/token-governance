@@ -17,8 +17,7 @@ interface ITokenGovernance {
 
     /// @dev Burns existing tokens.
     ///
-    /// @param from Account to remove the amount from.
     /// @param amount Amount to decrease the supply by.
     ///
-    function burn(address from, uint256 amount) external;
+    function burn(uint256 amount) external;
 }
