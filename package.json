@@ -23,7 +23,7 @@
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
     "format": "prettier --check --write contracts/**/* test/**/* --config .prettierrc",
     "export": "node scripts/export.js",
-    "prepare": "yarn compile"
+    "prepare": "npm run compile"
   },
   "dependencies": {
     "@openzeppelin/contracts": "3.2.0"
