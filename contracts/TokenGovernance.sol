@@ -9,13 +9,13 @@ import "./ITokenGovernance.sol";
 /// administrative privileges.
 contract TokenGovernance is ITokenGovernance, AccessControl {
     // The supervisor role is used to globally govern the contract and its governing roles.
-    bytes32 public constant SUPERVISOR_ROLE = keccak256("SUPERVISOR_ROLE");
+    bytes32 public constant ROLE_SUPERVISOR = keccak256("ROLE_SUPERVISOR");
 
     // The governor role is used to govern the the minter role.
-    bytes32 public constant GOVERNOR_ROLE = keccak256("GOVERNOR_ROLE");
+    bytes32 public constant ROLE_GOVERNOR = keccak256("ROLE_GOVERNOR");
 
     // The minter role is used to control who can request the mintable ERC20 token to mint additional tokens.
-    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    bytes32 public constant ROLE_MINTER = keccak256("ROLE_MINTER");
 
     // The address of the mintable ERC20 token.
     IMintableToken public override token;
@@ -29,17 +29,17 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
         token = mintableToken;
 
         // Set up administrative roles.
-        _setRoleAdmin(SUPERVISOR_ROLE, SUPERVISOR_ROLE);
-        _setRoleAdmin(GOVERNOR_ROLE, SUPERVISOR_ROLE);
-        _setRoleAdmin(MINTER_ROLE, GOVERNOR_ROLE);
+        _setRoleAdmin(ROLE_SUPERVISOR, ROLE_SUPERVISOR);
+        _setRoleAdmin(ROLE_GOVERNOR, ROLE_SUPERVISOR);
+        _setRoleAdmin(ROLE_MINTER, ROLE_GOVERNOR);
 
         // Allow the deployer to initially govern the contract.
-        _setupRole(SUPERVISOR_ROLE, _msgSender());
+        _setupRole(ROLE_SUPERVISOR, _msgSender());
     }
 
     /// @dev Accepts the ownership of the token. Only allowed by the SUPERVISOR role.
     function acceptTokenOwnership() external {
-        require(hasRole(SUPERVISOR_ROLE, _msgSender()), "ERR_ACCESS_DENIED");
+        require(hasRole(ROLE_SUPERVISOR, _msgSender()), "ERR_ACCESS_DENIED");
 
         token.acceptOwnership();
     }
@@ -50,7 +50,7 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
     /// @param amount Amount to increase the supply by.
     ///
     function mint(address to, uint256 amount) external override {
-        require(hasRole(MINTER_ROLE, _msgSender()), "ERR_ACCESS_DENIED");
+        require(hasRole(ROLE_MINTER, _msgSender()), "ERR_ACCESS_DENIED");
 
         token.issue(to, amount);
     }
