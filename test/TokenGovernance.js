@@ -7,9 +7,9 @@ const TokenGovernance = artifacts.require('TokenGovernance');
 const MintableToken = artifacts.require('MintableToken');
 
 contract('TokenGovernance', async (accounts) => {
-  const SUPERVISOR_ROLE = web3.utils.keccak256('SUPERVISOR_ROLE');
-  const GOVERNOR_ROLE = web3.utils.keccak256('GOVERNOR_ROLE');
-  const MINTER_ROLE = web3.utils.keccak256('MINTER_ROLE');
+  const ROLE_SUPERVISOR = web3.utils.keccak256('ROLE_SUPERVISOR');
+  const ROLE_GOVERNOR = web3.utils.keccak256('ROLE_GOVERNOR');
+  const ROLE_MINTER = web3.utils.keccak256('ROLE_MINTER');
 
   let token;
   const supervisor = accounts[0];
@@ -37,17 +37,17 @@ contract('TokenGovernance', async (accounts) => {
       });
 
       it('should set the correct permissions', async () => {
-        expect(await tokenGovernance.getRoleMemberCount.call(SUPERVISOR_ROLE)).to.be.bignumber.equal(new BN(1));
-        expect(await tokenGovernance.getRoleMemberCount.call(GOVERNOR_ROLE)).to.be.bignumber.equal(new BN(0));
-        expect(await tokenGovernance.getRoleMemberCount.call(MINTER_ROLE)).to.be.bignumber.equal(new BN(0));
+        expect(await tokenGovernance.getRoleMemberCount.call(ROLE_SUPERVISOR)).to.be.bignumber.equal(new BN(1));
+        expect(await tokenGovernance.getRoleMemberCount.call(ROLE_GOVERNOR)).to.be.bignumber.equal(new BN(0));
+        expect(await tokenGovernance.getRoleMemberCount.call(ROLE_MINTER)).to.be.bignumber.equal(new BN(0));
 
-        expect(await tokenGovernance.getRoleAdmin.call(SUPERVISOR_ROLE)).to.eql(SUPERVISOR_ROLE);
-        expect(await tokenGovernance.getRoleAdmin.call(GOVERNOR_ROLE)).to.eql(SUPERVISOR_ROLE);
-        expect(await tokenGovernance.getRoleAdmin.call(MINTER_ROLE)).to.eql(GOVERNOR_ROLE);
+        expect(await tokenGovernance.getRoleAdmin.call(ROLE_SUPERVISOR)).to.eql(ROLE_SUPERVISOR);
+        expect(await tokenGovernance.getRoleAdmin.call(ROLE_GOVERNOR)).to.eql(ROLE_SUPERVISOR);
+        expect(await tokenGovernance.getRoleAdmin.call(ROLE_MINTER)).to.eql(ROLE_GOVERNOR);
 
-        expect(await tokenGovernance.hasRole.call(SUPERVISOR_ROLE, supervisor)).to.be.true();
-        expect(await tokenGovernance.hasRole.call(GOVERNOR_ROLE, supervisor)).to.be.false();
-        expect(await tokenGovernance.hasRole.call(MINTER_ROLE, supervisor)).to.be.false();
+        expect(await tokenGovernance.hasRole.call(ROLE_SUPERVISOR, supervisor)).to.be.true();
+        expect(await tokenGovernance.hasRole.call(ROLE_GOVERNOR, supervisor)).to.be.false();
+        expect(await tokenGovernance.hasRole.call(ROLE_MINTER, supervisor)).to.be.false();
       });
     });
   });
@@ -59,7 +59,7 @@ contract('TokenGovernance', async (accounts) => {
     beforeEach(async () => {
       tokenGovernance = await TokenGovernance.new(token.address, { from: supervisor });
 
-      await tokenGovernance.grantRole(GOVERNOR_ROLE, governor, { from: supervisor });
+      await tokenGovernance.grantRole(ROLE_GOVERNOR, governor, { from: supervisor });
     });
 
     context('non-supervisor', async () => {
@@ -75,11 +75,11 @@ contract('TokenGovernance', async (accounts) => {
         const newSupervisor = accounts[2];
 
         await expectRevert(
-          tokenGovernance.grantRole(SUPERVISOR_ROLE, newSupervisor, { from: nonSupervisor }),
+          tokenGovernance.grantRole(ROLE_SUPERVISOR, newSupervisor, { from: nonSupervisor }),
           'AccessControl: sender must be an admin to grant'
         );
         await expectRevert(
-          tokenGovernance.revokeRole(SUPERVISOR_ROLE, governor, { from: nonSupervisor }),
+          tokenGovernance.revokeRole(ROLE_SUPERVISOR, governor, { from: nonSupervisor }),
           'AccessControl: sender must be an admin to revoke'
         );
       });
@@ -88,11 +88,11 @@ contract('TokenGovernance', async (accounts) => {
         const newGovernor = accounts[2];
 
         await expectRevert(
-          tokenGovernance.grantRole(GOVERNOR_ROLE, newGovernor, { from: nonSupervisor }),
+          tokenGovernance.grantRole(ROLE_GOVERNOR, newGovernor, { from: nonSupervisor }),
           'AccessControl: sender must be an admin to grant'
         );
         await expectRevert(
-          tokenGovernance.revokeRole(GOVERNOR_ROLE, governor, { from: nonSupervisor }),
+          tokenGovernance.revokeRole(ROLE_GOVERNOR, governor, { from: nonSupervisor }),
           'AccessControl: sender must be an admin to revoke'
         );
       });
@@ -101,14 +101,14 @@ contract('TokenGovernance', async (accounts) => {
         const newMinter = accounts[2];
 
         await expectRevert(
-          tokenGovernance.grantRole(MINTER_ROLE, newMinter, { from: nonSupervisor }),
+          tokenGovernance.grantRole(ROLE_MINTER, newMinter, { from: nonSupervisor }),
           'AccessControl: sender must be an admin to grant'
         );
 
-        await tokenGovernance.grantRole(MINTER_ROLE, newMinter, { from: governor });
+        await tokenGovernance.grantRole(ROLE_MINTER, newMinter, { from: governor });
 
         await expectRevert(
-          tokenGovernance.revokeRole(MINTER_ROLE, newMinter, { from: nonSupervisor }),
+          tokenGovernance.revokeRole(ROLE_MINTER, newMinter, { from: nonSupervisor }),
           'AccessControl: sender must be an admin to revoke'
         );
       });
@@ -125,35 +125,35 @@ contract('TokenGovernance', async (accounts) => {
       it('should be able to control the Supervisor role', async () => {
         const newSupervisor = accounts[2];
 
-        await tokenGovernance.grantRole(SUPERVISOR_ROLE, newSupervisor, { from: supervisor });
-        expect(await tokenGovernance.hasRole.call(SUPERVISOR_ROLE, newSupervisor)).to.be.true();
+        await tokenGovernance.grantRole(ROLE_SUPERVISOR, newSupervisor, { from: supervisor });
+        expect(await tokenGovernance.hasRole.call(ROLE_SUPERVISOR, newSupervisor)).to.be.true();
 
-        await tokenGovernance.revokeRole(SUPERVISOR_ROLE, newSupervisor, { from: supervisor });
-        expect(await tokenGovernance.hasRole.call(SUPERVISOR_ROLE, newSupervisor)).to.be.false();
+        await tokenGovernance.revokeRole(ROLE_SUPERVISOR, newSupervisor, { from: supervisor });
+        expect(await tokenGovernance.hasRole.call(ROLE_SUPERVISOR, newSupervisor)).to.be.false();
       });
 
       it('should be able to control the Governor role', async () => {
         const newGovernor = accounts[2];
 
-        await tokenGovernance.grantRole(GOVERNOR_ROLE, newGovernor, { from: supervisor });
-        expect(await tokenGovernance.hasRole.call(GOVERNOR_ROLE, newGovernor)).to.be.true();
+        await tokenGovernance.grantRole(ROLE_GOVERNOR, newGovernor, { from: supervisor });
+        expect(await tokenGovernance.hasRole.call(ROLE_GOVERNOR, newGovernor)).to.be.true();
 
-        await tokenGovernance.revokeRole(GOVERNOR_ROLE, newGovernor, { from: supervisor });
-        expect(await tokenGovernance.hasRole.call(GOVERNOR_ROLE, newGovernor)).to.be.false();
+        await tokenGovernance.revokeRole(ROLE_GOVERNOR, newGovernor, { from: supervisor });
+        expect(await tokenGovernance.hasRole.call(ROLE_GOVERNOR, newGovernor)).to.be.false();
       });
 
       it('should revert when trying to control the Minter role', async () => {
         const newMinter = accounts[2];
 
         await expectRevert(
-          tokenGovernance.grantRole(MINTER_ROLE, newMinter, { from: supervisor }),
+          tokenGovernance.grantRole(ROLE_MINTER, newMinter, { from: supervisor }),
           'AccessControl: sender must be an admin to grant'
         );
 
-        await tokenGovernance.grantRole(MINTER_ROLE, newMinter, { from: governor });
+        await tokenGovernance.grantRole(ROLE_MINTER, newMinter, { from: governor });
 
         await expectRevert(
-          tokenGovernance.revokeRole(MINTER_ROLE, newMinter, { from: supervisor }),
+          tokenGovernance.revokeRole(ROLE_MINTER, newMinter, { from: supervisor }),
           'AccessControl: sender must be an admin to revoke'
         );
       });
@@ -164,11 +164,11 @@ contract('TokenGovernance', async (accounts) => {
         const newSupervisor = accounts[2];
 
         await expectRevert(
-          tokenGovernance.grantRole(SUPERVISOR_ROLE, newSupervisor, { from: governor }),
+          tokenGovernance.grantRole(ROLE_SUPERVISOR, newSupervisor, { from: governor }),
           'AccessControl: sender must be an admin to grant'
         );
         await expectRevert(
-          tokenGovernance.revokeRole(SUPERVISOR_ROLE, governor, { from: governor }),
+          tokenGovernance.revokeRole(ROLE_SUPERVISOR, governor, { from: governor }),
           'AccessControl: sender must be an admin to revoke'
         );
       });
@@ -177,11 +177,11 @@ contract('TokenGovernance', async (accounts) => {
         const newGovernor = accounts[2];
 
         await expectRevert(
-          tokenGovernance.grantRole(GOVERNOR_ROLE, newGovernor, { from: governor }),
+          tokenGovernance.grantRole(ROLE_GOVERNOR, newGovernor, { from: governor }),
           'AccessControl: sender must be an admin to grant'
         );
         await expectRevert(
-          tokenGovernance.revokeRole(GOVERNOR_ROLE, governor, { from: governor }),
+          tokenGovernance.revokeRole(ROLE_GOVERNOR, governor, { from: governor }),
           'AccessControl: sender must be an admin to revoke'
         );
       });
@@ -189,11 +189,11 @@ contract('TokenGovernance', async (accounts) => {
       it('should be able to control the Minter role', async () => {
         const newMinter = accounts[2];
 
-        await tokenGovernance.grantRole(MINTER_ROLE, newMinter, { from: governor });
-        expect(await tokenGovernance.hasRole.call(MINTER_ROLE, newMinter)).to.be.true();
+        await tokenGovernance.grantRole(ROLE_MINTER, newMinter, { from: governor });
+        expect(await tokenGovernance.hasRole.call(ROLE_MINTER, newMinter)).to.be.true();
 
-        await tokenGovernance.revokeRole(MINTER_ROLE, newMinter, { from: governor });
-        expect(await tokenGovernance.hasRole.call(MINTER_ROLE, newMinter)).to.be.false();
+        await tokenGovernance.revokeRole(ROLE_MINTER, newMinter, { from: governor });
+        expect(await tokenGovernance.hasRole.call(ROLE_MINTER, newMinter)).to.be.false();
       });
     });
   });
@@ -213,10 +213,10 @@ contract('TokenGovernance', async (accounts) => {
       await token.transferOwnership(tokenGovernance.address, { from: supervisor });
       await tokenGovernance.acceptTokenOwnership({ from: supervisor });
 
-      await tokenGovernance.grantRole(GOVERNOR_ROLE, governor, { from: supervisor });
+      await tokenGovernance.grantRole(ROLE_GOVERNOR, governor, { from: supervisor });
 
-      await tokenGovernance.grantRole(MINTER_ROLE, minter, { from: governor });
-      await tokenGovernance.grantRole(MINTER_ROLE, minter2, { from: governor });
+      await tokenGovernance.grantRole(ROLE_MINTER, minter, { from: governor });
+      await tokenGovernance.grantRole(ROLE_MINTER, minter2, { from: governor });
     });
 
     describe('issuing', async () => {
