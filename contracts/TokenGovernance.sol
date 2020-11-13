@@ -18,7 +18,7 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
     bytes32 public constant ROLE_MINTER = keccak256("ROLE_MINTER");
 
     // The address of the mintable ERC20 token.
-    IMintableToken public override token;
+    IMintableToken public immutable override token;
 
     /// @dev Initializes the contract.
     ///
