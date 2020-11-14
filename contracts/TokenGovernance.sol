@@ -11,7 +11,7 @@ contract TokenGovernance is ITokenGovernance, AccessControl {
     // The supervisor role is used to globally govern the contract and its governing roles.
     bytes32 public constant ROLE_SUPERVISOR = keccak256("ROLE_SUPERVISOR");
 
-    // The governor role is used to govern the the minter role.
+    // The governor role is used to govern the minter role.
     bytes32 public constant ROLE_GOVERNOR = keccak256("ROLE_GOVERNOR");
 
     // The minter role is used to control who can request the mintable ERC20 token to mint additional tokens.
