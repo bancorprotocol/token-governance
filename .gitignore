@@ -10,9 +10,12 @@ yarn-error.log*
 # python
 *.pyc
 
+# hardhat
+/artifacts
+/cache
+/typechain
+
 solidity/build
-artifacts/
-cache/
 .coverage_artifacts
 .coverage_contracts
 coverage
