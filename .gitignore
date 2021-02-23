@@ -11,6 +11,8 @@ yarn-error.log*
 *.pyc
 
 solidity/build
+artifacts/
+cache/
 .coverage_artifacts
 .coverage_contracts
 coverage
