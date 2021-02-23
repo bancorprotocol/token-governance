@@ -1,10 +1,11 @@
-import { HardhatUserConfig, task } from 'hardhat/config';
+import { HardhatUserConfig } from 'hardhat/config';
 
 import '@nomiclabs/hardhat-web3';
 import '@nomiclabs/hardhat-waffle';
 import '@nomiclabs/hardhat-ethers';
 
 import 'hardhat-typechain';
+import 'solidity-coverage';
 
 const config: HardhatUserConfig = {
   solidity: {
