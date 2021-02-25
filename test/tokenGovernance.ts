@@ -1,13 +1,11 @@
 import { ethers } from 'hardhat';
 import { BigNumber } from 'ethers';
-
 import { expect } from 'chai';
 
 import { TokenGovernance, TokenGovernance__factory } from '../typechain';
 import { MintableToken, MintableToken__factory } from '../typechain';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
 let supervisor: SignerWithAddress;
 let accounts: SignerWithAddress[];
@@ -41,7 +39,9 @@ describe('TokenGovernance', () => {
   describe('construction', () => {
     context('invalid', () => {
       it('should revert when initialized with an empty token', async () => {
-        await expect(TokenGovernanceContract.deploy(ZERO_ADDRESS)).to.be.revertedWith('ERR_INVALID_ADDRESS');
+        await expect(TokenGovernanceContract.deploy(ethers.constants.AddressZero)).to.be.revertedWith(
+          'ERR_INVALID_ADDRESS'
+        );
       });
     });
 
