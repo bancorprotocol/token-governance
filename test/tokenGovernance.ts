@@ -1,4 +1,4 @@
-import { ethers, Web3 } from 'hardhat';
+import { ethers } from 'hardhat';
 import { BigNumber } from 'ethers';
 
 import { expect } from 'chai';
@@ -18,9 +18,9 @@ let tokenGovernance: TokenGovernance;
 let MintableTokenContract: MintableToken__factory;
 let mintableToken: MintableToken;
 
-const ROLE_SUPERVISOR = Web3.utils.keccak256('ROLE_SUPERVISOR');
-const ROLE_GOVERNOR = Web3.utils.keccak256('ROLE_GOVERNOR');
-const ROLE_MINTER = Web3.utils.keccak256('ROLE_MINTER');
+const ROLE_SUPERVISOR = ethers.utils.id('ROLE_SUPERVISOR');
+const ROLE_GOVERNOR = ethers.utils.id('ROLE_GOVERNOR');
+const ROLE_MINTER = ethers.utils.id('ROLE_MINTER');
 
 describe('TokenGovernance', () => {
   before(async () => {
