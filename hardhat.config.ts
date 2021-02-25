@@ -16,6 +16,11 @@ const config: HardhatUserConfig = {
         runs: 200
       }
     }
+  },
+  mocha: {
+    timeout: 600000,
+    color: true,
+    slow: 30000
   }
 };
 
