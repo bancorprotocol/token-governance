@@ -7,8 +7,9 @@
     "url": "git+https://github.com/bancorprotocol/token-governance"
   },
   "files": [
-    "contracts/**",
-    "typechain/**"
+    "/contracts/**/*.sol",
+    "/artifacts/contracts/**/*.json",
+    "/typechain/**/*.ts"
   ],
   "author": "Leonid Beder",
   "license": "MIT",
