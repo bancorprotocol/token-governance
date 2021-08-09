@@ -10,7 +10,6 @@ yarn-error.log*
 # hardhat
 /artifacts
 /cache
-/typechain
 
 .coverage_artifacts
 .coverage_contracts
