@@ -6,9 +6,13 @@
     "type": "git",
     "url": "git+https://github.com/bancorprotocol/token-governance"
   },
+  "files": [
+    "contracts/**",
+    "typechain/**"
+  ],
   "author": "Leonid Beder",
   "license": "MIT",
-  "main": "truffle-config.ts",
+  "main": "hardhat.config.ts",
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
