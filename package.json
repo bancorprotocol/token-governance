@@ -6,9 +6,14 @@
     "type": "git",
     "url": "git+https://github.com/bancorprotocol/token-governance"
   },
+  "files": [
+    "/contracts/**/*.sol",
+    "/artifacts/contracts/**/*.json",
+    "/typechain/**/*.ts"
+  ],
   "author": "Leonid Beder",
   "license": "MIT",
-  "main": "truffle-config.ts",
+  "main": "hardhat.config.ts",
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
@@ -16,16 +21,18 @@
     "lint": "yarn lint:js && yarn lint:sol",
     "lint:js": "eslint . --ext .ts",
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
-    "format": "prettier --check --write contracts/**/* test/**/* --config .prettierrc"
+    "format": "prettier --check --write contracts/**/* test/**/* --config .prettierrc",
+    "clean": "rm -rf artifacts cache data coverage typechain"
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.1",
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/contracts": "3.2.0",
-    "@typechain/ethers-v5": "^6.0.0",
+    "@typechain/ethers-v5": "^7.0.1",
+    "@typechain/hardhat": "^2.3.0",
     "@types/chai": "^4.2.15",
     "@types/mocha": "^8.2.1",
-    "@types/node": "^14.14.31",
+    "@types/node": "^16.4.13",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
     "chai": "^4.3.0",
@@ -35,16 +42,15 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "ethereum-waffle": "^3.2.2",
-    "ethers": "^5.0.0",
-    "hardhat": "^2.0.10",
-    "hardhat-typechain": "^0.3.5",
-    "solhint": "^3.3.2",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.4.4",
+    "hardhat": "2.5.0",
+    "solhint": "^3.3.6",
     "solidity-coverage": "^0.7.15",
     "ts-generator": "^0.1.1",
-    "ts-node": "^9.1.1",
-    "typechain": "^4.0.2",
-    "typescript": "^4.1.5"
+    "ts-node": "^10.2.0",
+    "typechain": "^5.1.2",
+    "typescript": "^4.3.5"
   },
   "dependencies": {}
 }
