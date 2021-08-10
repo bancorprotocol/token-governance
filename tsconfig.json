@@ -9,6 +9,5 @@
     "strict": true,
     "esModuleInterop": true
   },
-  "include": ["./scripts", "./test"],
-  "files": ["./hardhat.config.ts"]
+  "include": ["./typechain"]
 }
