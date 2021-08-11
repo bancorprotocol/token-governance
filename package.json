@@ -24,7 +24,7 @@
     "lint:js": "eslint . --ext .ts",
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
     "format": "prettier --check --write contracts/**/* test/**/* --config .prettierrc",
-    "clean": "rm -rf artifacts cache data coverage typechain"
+    "clean": "rm -rf artifacts cache data coverage dist typechain"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
