@@ -6,12 +6,12 @@
     "type": "git",
     "url": "git+https://github.com/bancorprotocol/token-governance"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "typechain/index.js",
+  "types": "typechain/index.d.ts",
   "files": [
     "/contracts/**/*.sol",
     "/artifacts/contracts/**/*.json",
-    "/dist"
+    "/typechain"
   ],
   "author": "Leonid Beder",
   "license": "MIT",
@@ -19,7 +19,7 @@
     "build": "hardhat compile",
     "test": "hardhat test",
     "coverage": "hardhat coverage",
-    "prepublish": "yarn clean && yarn build && tsc && cp typechain/*.d.ts dist/",
+    "prepublish": "yarn clean && yarn build && tsc",
     "lint": "yarn lint:js && yarn lint:sol",
     "lint:js": "eslint . --ext .ts",
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
