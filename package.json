@@ -11,8 +11,7 @@
   "files": [
     "/contracts/**/*.sol",
     "/artifacts/contracts/**/*.json",
-    "/typechain",
-    "/interfaces/**/*.sol"
+    "/typechain"
   ],
   "author": "Leonid Beder",
   "license": "MIT",
