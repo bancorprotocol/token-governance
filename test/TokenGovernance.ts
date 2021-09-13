@@ -2,8 +2,8 @@ import { ethers } from 'hardhat';
 import { BigNumber } from 'ethers';
 import { expect } from 'chai';
 
-import { TokenGovernance, TokenGovernance__factory } from '../../typechain';
-import { MintableToken, MintableToken__factory } from '../../typechain';
+import { TokenGovernance, TokenGovernance__factory } from '../typechain';
+import { MintableToken, MintableToken__factory } from '../typechain';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
