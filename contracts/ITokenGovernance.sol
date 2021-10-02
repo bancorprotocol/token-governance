@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.12 <=0.7.6;
+pragma solidity >=0.6.12 <=0.8.9;
 
 import "./IMintableToken.sol";
 
