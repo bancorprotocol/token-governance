@@ -1,6 +1,6 @@
 {
   "name": "@bancor/token-governance",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Role-based Token Governance",
   "repository": {
     "type": "git",
