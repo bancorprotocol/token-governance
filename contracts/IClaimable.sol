@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.6.12 <=0.8.10;
+pragma solidity >=0.6.12;
 
 /// @title Claimable contract interface
 interface IClaimable {
